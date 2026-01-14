@@ -10,7 +10,16 @@ app.secret_key = "tu6fgjyuo7i65u7rtgwet3y5y6u"
 # --- REDIS SETUP ---
 # Heroku provides the Redis URL via the REDIS_URL environment variable
 redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379')
-db = redis.from_url(redis_url, decode_responses=True)
+
+# Use connection_pool to specify SSL settings if the URL starts with 'rediss://'
+if redis_url.startswith("rediss://"):
+    db = redis.from_url(
+        redis_url, 
+        decode_responses=True, 
+        ssl_cert_reqs=None # This line disables SSL verification
+    )
+else:
+    db = redis.from_url(redis_url, decode_responses=True)
 
 # --- 1. CONTENT DATABASE ---
 blog_data = {
