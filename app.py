@@ -1,10 +1,16 @@
 import os
+import redis
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 import string
 import random
 
 app = Flask(__name__)
 app.secret_key = "tu6fgjyuo7i65u7rtgwet3y5y6u" 
+
+# --- REDIS SETUP ---
+# Heroku provides the Redis URL via the REDIS_URL environment variable
+redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379')
+db = redis.from_url(redis_url, decode_responses=True)
 
 # --- 1. CONTENT DATABASE ---
 blog_data = {
@@ -106,7 +112,6 @@ blog_data = {
 }
 
 # --- EXISTING LOGIC ---
-url_db = {}
 def generate_id():
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for _ in range(6))
@@ -119,16 +124,23 @@ def index():
 def shorten():
     long_url = request.json.get('url')
     short_id = generate_id()
-    url_db[short_id] = long_url
+    
+    # Store in Redis: key is short_id, value is long_url
+    db.set(short_id, long_url)
+    
     return {"short_url": f"{request.host_url}s/{short_id}"}
+
 
 @app.route('/s/<short_id>')
 def start_short_path(short_id):
-    if short_id not in url_db:
+    # Retrieve from Redis
+    if not db.exists(short_id):
         return "URL Not Found", 404
+        
     session['step'] = 1
     session['target_id'] = short_id
     return redirect(url_for('interstitial'))
+
 
 @app.route('/interstitial', methods=['GET', 'POST'])
 def interstitial():
@@ -151,7 +163,8 @@ def interstitial():
 @app.route('/final')
 def final_page():
     short_id = session.get('target_id')
-    final_url = url_db.get(short_id)
+    # Retrieve the final URL from Redis using the stored ID
+    final_url = db.get(short_id)
     return render_template('final_page.html', final_url=final_url)
 
 @app.route('/blog/<category>/<slug>')
