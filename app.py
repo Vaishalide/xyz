@@ -6,7 +6,7 @@ import random
 app = Flask(__name__)
 app.secret_key = "tu6fgjyuo7i65u7rtgwet3y5y6u" 
 
-# --- 1. CONTENT DATABASE (Updated with NEET, CA, Teaching) ---
+# --- 1. CONTENT DATABASE ---
 blog_data = {
     # JEE Articles
     "math-shortcuts": {
@@ -31,7 +31,7 @@ blog_data = {
         """
     },
     
-    # NEET Articles (NEW)
+    # NEET Articles
     "neet-biology": {
         "title": "How to Score 340+ in NEET Biology",
         "content": """
@@ -54,7 +54,7 @@ blog_data = {
         """
     },
 
-    # CA Articles (NEW)
+    # CA Articles
     "ca-roadmap": {
         "title": "Chartered Accountancy: Foundation to Final",
         "content": """
@@ -66,7 +66,7 @@ blog_data = {
         """
     },
 
-    # Teaching Exam Articles (NEW)
+    # Teaching Exam Articles
     "ctet-cdp": {
         "title": "CTET: Child Development & Pedagogy (CDP)",
         "content": """
@@ -163,6 +163,11 @@ def blog_post(category, slug):
 @app.route('/privacy-policy')
 def privacy():
     return render_template('privacy.html')
+
+# --- NEW ROUTE FOR TERMS ---
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
