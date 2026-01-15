@@ -830,6 +830,52 @@ blog_data = {
         "title": "UPSC CSE Prelims: Elimination Techniques",
         "content": "<p>Prelims is becoming tougher.</p><h3>Elimination</h3><p>Extreme statements ('All', 'None', 'Only') are often wrong. Use logic to eliminate options.</p>"
     },
+    # --- NEW EXAM ARTICLES (ADDED) ---
+    
+    "rbi-grade-b": {
+        "title": "RBI Grade B 2026: The Golden Banking Career",
+        "content": "<p>RBI Grade B is widely considered the most prestigious job in the Indian banking sector. The exam focuses heavily on Economics and Social Issues (ESI) and Finance & Management (FM).</p><h3>Phase 2 Strategy</h3><p>Unlike IBPS, RBI requires descriptive writing skills. You must be able to type answers on a keyboard quickly. Focus on government schemes (Pradhan Mantri yojana) and RBI circulars from the last 6 months.</p>"
+    },
+    "sebi-grade-a": {
+        "title": "SEBI Grade A Officer: Syllabus and Strategy",
+        "content": "<p>Work for the regulator of the stock market. SEBI Grade A is ideal for CA, CS, and Law graduates.</p><h3>Paper 2 Subjects</h3><p>The syllabus includes Companies Act, Costing, Commerce & Accountancy, and Economics. The difficulty level is moderate, but accuracy is key because the cutoff is usually high.</p>"
+    },
+    "rrb-ntpc-railways": {
+        "title": "RRB NTPC: Cracking the Railway Recruitment Board Exam",
+        "content": "<p>The most popular exam in India with crores of applicants.</p><h3>Mathematics & Reasoning</h3><p>These two sections make up the bulk of the score. Speed is essential. Questions are generally 10th-grade level but require shortcuts.</p><h3>General Awareness</h3><p>Focus on Static GK (Railways history, Headquarters) and current science and technology.</p>"
+    },
+    "cat-exam-mba": {
+        "title": "CAT 2026: Gateway to IIMs and Top B-Schools",
+        "content": "<p>The Common Admission Test (CAT) is a test of aptitude, not knowledge.</p><h3>VARC (Verbal Ability)</h3><p>Read Aeon Essays and editorials daily. It's about comprehension, not just grammar.</p><h3>DILR (Data Interpretation)</h3><p>The toughest section. Pick the right sets. Solving 2 out of 4 sets correctly can get you a 99 percentile.</p>"
+    },
+    "ugc-net-jrf": {
+        "title": "UGC NET JRF: Qualifying for Assistant Professorship",
+        "content": "<p>For those aspiring to teach in colleges or pursue a PhD with a stipend.</p><h3>Paper 1 (General)</h3><p>Teaching Aptitude and Research Aptitude are critical. Practice DI questions as they are mark-fetchers.</p><h3>Paper 2 (Subject)</h3><p>Deep knowledge of your Masters subject is required. Stick to standard university textbooks.</p>"
+    },
+    "cuet-ug-entrance": {
+        "title": "CUET UG 2026: One Exam for All Central Universities",
+        "content": "<p>Admission to DU, BHU, and JNU now depends on CUET.</p><h3>Domain Subjects</h3><p>The syllabus is strictly Class 12 NCERT. Do not read extra books. If you are a Science student, master your Physics, Chem, and Bio NCERTs line by line.</p><h3>General Test</h3><p>Focus on basic current affairs and logical reasoning.</p>"
+    },
+    "ras-rpsc-exam": {
+        "title": "RPSC RAS: Strategy for Rajasthan Administrative Services",
+        "content": "<p>The premier civil service of Rajasthan.</p><h3>Rajasthan GK</h3><p>This is the dealbreaker. You must know Rajasthan's Geography, History, Art & Culture, and Economy inside out. Read 'Rajasthan Adhyayan' books.</p><h3>Mains Answer Writing</h3><p>Practice writing answers in Hindi as well, as the language papers carry significant weight.</p>"
+    },
+    "uppsc-pcs-exam": {
+        "title": "UPPSC PCS: Cracking the Uttar Pradesh Civil Services",
+        "content": "<p>The syllabus overlaps 90% with UPSC, making it a great backup.</p><h3>UP Special</h3><p>Recently, optional subjects were removed and replaced with UP Special papers. Focus on UP's history, economy, and current schemes.</p><h3>Facts vs Concepts</h3><p>Unlike UPSC, UPPSC asks many factual questions (dates, names, places).</p>"
+    },
+    "ipmat-iim": {
+        "title": "IPMAT: Integrated Programme in Management (IIM Indore/Rohtak)",
+        "content": "<p>Why wait for MBA? Join IIM directly after Class 12.</p><h3>Higher Mathematics</h3><p>IPMAT asks higher-level math (Calculus, Probability, Matrices) unlike other aptitude tests. Prepare accordingly.</p><h3>Verbal Ability</h3><p>Vocabulary plays a huge role here. Learn 10 new words daily.</p>"
+    },
+    "gate-exam": {
+        "title": "GATE 2026: Opportunities in PSUs and IITs",
+        "content": "<p>Graduate Aptitude Test in Engineering is not just for M.Tech.</p><h3>PSU Recruitment</h3><p>ONGC, IOCL, NTPC recruit directly through GATE scores. You need a rank under 100 for top PSUs.</p><h3>Concepts over Rote</h3><p>GATE questions test deep conceptual understanding. Numerical questions have no options, so guessing is impossible.</p>"
+    },
+    "ssc-chsl-12th": {
+        "title": "SSC CHSL: Best Govt Jobs after Class 12",
+        "content": "<p>Secure a central government job as a Data Entry Operator or Clerk.</p><h3>Tier 1 Scoring</h3><p>Aim for 160+ to be safe. English and Reasoning are high-scoring areas.</p><h3>Typing Test</h3><p>Do not ignore typing. Many toppers fail the final skill test. Practice 15 mins daily.</p>"
+    },
     "cs-executive-guide": {
         "title": "Company Secretary (CS) Executive: Module 1 vs Module 2",
         "content": "<p>CS is about Law compliance.</p><h3>Company Law</h3><p>The bible for CS. Sections of Companies Act 2013 must be on your fingertips.</p>"
