@@ -1247,6 +1247,46 @@ blog_data = {
             <p>Apart from JGLS, scores are accepted by NMIMS (Mumbai/Bangalore), UPES Dehradun, and several other private universities. It serves as an excellent backup to the NLUs.</p>
         """
     },
+    # --- DESIGN & ARCHITECTURE ARTICLES ---
+    "nift-situation-test": {
+        "title": "NIFT Situation Test 2026: Material Handling & Model Making",
+        "content": """
+            <p class="lead">The NIFT Situation Test is the second stage of the NIFT entrance exam for B.Des candidates. It carries 20% weightage and tests your material handling skills and innovative ability.</p>
+            <hr>
+            <h3>What to Expect?</h3>
+            <p>You will be given a packet of materials (cardboard, clay, wire, thermocol, colored paper, etc.) and asked to create a 3D model based on a theme. Common themes include "A Futuristic Workspace," "A Children's Park," or "A Wearable Accessory."</p>
+            <h3>Evaluation Criteria</h3>
+            <ul>
+                <li><strong>Space Visualization:</strong> How well you use 3D space.</li>
+                <li><strong>Innovative Use of Materials:</strong> Don't just paste paper. Weave it, crumple it, or create textures.</li>
+                <li><strong>Neatness:</strong> No visible glue marks or messy cutting.</li>
+                <li><strong>Write-up:</strong> You must write a concept note explaining your model. This is crucial.</li>
+            </ul>
+        """
+    },
+    "nata-drawing-tips": {
+        "title": "NATA 2026: Drawing & Observation Skills for B.Arch",
+        "content": """
+            <p class="lead">The National Aptitude Test in Architecture (NATA) is mandatory for admission to B.Arch courses in India. The drawing section tests your perspective and proportion skills.</p>
+            <hr>
+            <h3>Mastering Perspective</h3>
+            <p><strong>1-Point Perspective:</strong> Used for interiors (e.g., "Draw a view of a supermarket aisle"). All lines converge to a single vanishing point.</p>
+            <p><strong>2-Point Perspective:</strong> Used for exteriors (e.g., "Draw a street view looking at a corner building"). Vertical lines stay vertical; horizontal lines converge to two points.</p>
+            <h3>Shadows and Light</h3>
+            <p>Always decide the source of light before shading. If the light is from the top-left, shadows fall to the bottom-right. Use cross-hatching to show depth.</p>
+        """
+    },
+    "uceed-strategy": {
+        "title": "UCEED 2026: How to Crack IIT Design Entrance",
+        "content": """
+            <p class="lead">UCEED is your gateway to the Bachelor of Design (B.Des) program at IIT Bombay, Delhi, Guwahati, Hyderabad, and IIITDM Jabalpur.</p>
+            <hr>
+            <h3>Part A: Computer Based Test</h3>
+            <p>This tests Visualization and Spatial Ability. You must be able to mentally rotate 3D objects and identify hidden faces. There is also a numerical answer type section.</p>
+            <h3>Part B: Sketching</h3>
+            <p>Unlike NIFT, UCEED sketching is strictly about perspective and proportion, not "artistic" beauty. Questions often involve drawing a scene from a specific viewpoint (e.g., "View from inside a washing machine").</p>
+        """
+    },
     
     # Default
     "default": {
