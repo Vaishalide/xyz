@@ -897,6 +897,23 @@ blog_data = {
         "title": "GMAT Focus Edition: New Exam Pattern 2026",
         "content": "<p>The GMAT has changed. The new 'Focus Edition' is shorter.</p><h3>Changes</h3><p>No AWA (Essay). Data Insights section is now crucial. Total time is reduced to 2 hours 15 minutes.</p>"
     },
+    # --- LAW ENTRANCE ARTICLES (HIGH INTENT) ---
+    "ailet-vs-clat": {
+        "title": "AILET vs CLAT 2026: Key Differences & Comparison",
+        "content": "<p>Confusion between NLU Delhi and the Consortium? Here is the breakdown.</p><h3>The Major Difference</h3><p><strong>CLAT:</strong> Accepts you into 22+ NLUs (Bangalore, Hyderabad, Kolkata). Heavy focus on Reading Comprehension.</p><p><strong>AILET:</strong> Only for NLU Delhi. The paper is scientifically tougher with tricky Analytical Reasoning questions.</p><h3>Selection Ratio</h3><p>AILET is statistically harder to crack due to fewer seats (approx 110) compared to CLAT (approx 2500+).</p>"
+    },
+    "mh-cet-law-books": {
+        "title": "Best Books for MH CET Law 2026 (3 Year & 5 Year)",
+        "content": "<p>Targeting GLC Mumbai or ILS Pune? MH CET is your gateway.</p><h3>Top Books</h3><ul><li><strong>Legal Aptitude:</strong> R.K. Gupta or AP Bhardwaj.</li><li><strong>GK:</strong> Lucent's GK (Static) and Pratiyogita Darpan (Current).</li><li><strong>Logic:</strong> R.S. Aggarwal (Verbal & Non-Verbal).</li></ul><h3>Exam Tip</h3><p>MH CET has <strong>No Negative Marking</strong>. Attempt all 150 questions.</p>"
+    },
+    "slat-symbiosis": {
+        "title": "SLAT 2026: Symbiosis Law Admission Test Strategy",
+        "content": "<p>Get into SLS Pune or Noida.</p><h3>Exam Pattern</h3><p>SLAT is unique because it includes a <strong>WAT (Written Ability Test)</strong>. You have to write an essay after the MCQ section.</p><h3>Interview</h3><p>Selection is not just based on marks. The Personal Interaction (PI) round carries 30% weightage.</p>"
+    },
+    "lsat-india-scholarships": {
+        "title": "LSAT India: Scholarship Opportunities & Colleges",
+        "content": "<p>LSAT India is accepted by Jindal Global Law School (JGLS) and other private universities.</p><h3>The Jindal Scholarship</h3><p>If you score in the 99.9 percentile, you can get a nearly 100% tuition waiver at JGLS, which otherwise costs 30+ Lakhs.</p><h3>Logic Games</h3><p>The exam is purely based on Critical and Analytical reasoning. No GK or Math is asked.</p>"
+    },
     
     # Default
     "default": {
