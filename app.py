@@ -1287,7 +1287,23 @@ blog_data = {
             <p>Unlike NIFT, UCEED sketching is strictly about perspective and proportion, not "artistic" beauty. Questions often involve drawing a scene from a specific viewpoint (e.g., "View from inside a washing machine").</p>
         """
     },
-    
+
+    "ssc-cgl-strategy": {
+    "title": "SSC CGL 2026: Complete Strategy for Tier 1 & Tier 2",
+    "content": """
+        <p class="lead">The Staff Selection Commission Combined Graduate Level (SSC CGL) is one of India's most popular exams for securing Group B and C posts in various ministries. With the updated exam pattern, a balanced approach is required.</p>
+        <hr>
+        <h3>1. Tier 1: The Qualifying Hurdle</h3>
+        <p>Focus on speed and accuracy. Quantitative Aptitude and Reasoning should be your scoring pillars. For General Awareness, stick to Lucent's for static GK and monthly compilations for current affairs.</p>
+        <h3>2. Tier 2: The Final Selection</h3>
+        <ul>
+            <li><strong>Mathematical Abilities:</strong> Practice advanced math topics like Algebra and Geometry from previous year papers.</li>
+            <li><strong>English Language:</strong> Reading comprehension and spotting errors carry high weightage.</li>
+            <li><strong>Computer Knowledge:</strong> Do not ignore this qualifying section; basic hardware and software knowledge is essential.</li>
+        </ul>
+        <p class="text-muted">Consistent practice of mock tests is the only way to master the time-bound nature of this exam.</p>
+    """
+}, 
     # Default
     "default": {
         "title": "The Art of Topping Competitive Exams: A Universal Strategy",
