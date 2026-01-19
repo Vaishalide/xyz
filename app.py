@@ -1448,6 +1448,10 @@ def privacy():
 def terms():
     return render_template('terms.html')
 
+@app.route('/disclaimer')
+def disclaimer():
+    return render_template('disclaimer.html')
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
