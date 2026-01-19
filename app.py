@@ -1463,5 +1463,35 @@ def contact():
 def about():
     return render_template('about.html')
 
+# 1. Add a Robots.txt route
+@app.route('/robots.txt')
+def robots():
+    content = "User-agent: *\nAllow: /\nSitemap: https://subodhpgcollege.site/sitemap.xml"
+    response = make_response(content)
+    response.headers["Content-Type"] = "text/plain"
+    return response
+
+# 2. Add a Dynamic Sitemap route
+@app.route('/sitemap.xml')
+def sitemap():
+    pages = []
+    # Static pages
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and len(rule.arguments) == 0:
+            pages.append(f"https://subodhpgcollege.site{rule.rule}")
+    
+    # Add blog posts from your database
+    for slug in blog_data:
+        pages.append(f"https://subodhpgcollege.site/blog/general/{slug}")
+
+    sitemap_xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for page in pages:
+        sitemap_xml += f'  <url><loc>{page}</loc></url>\n'
+    sitemap_xml += '</urlset>'
+    
+    response = make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
 if __name__ == '__main__':
     app.run(debug=True)
