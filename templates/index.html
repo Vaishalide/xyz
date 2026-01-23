@@ -124,7 +124,9 @@
             {% endif %}
         </div>
         {% endif %}
-    </div> {% if not search_query and total_pages > 1 %}
+    </div>
+
+    {% if not search_query and total_pages > 1 %}
     <nav aria-label="Page navigation" class="mt-5">
         <ul class="pagination justify-content-center">
             {% if page > 1 %}
@@ -148,45 +150,6 @@
     </nav>
     {% endif %}
 </div>
-
-    <div class="container my-5">
-        <div class="row">
-            {% for post in posts %}
-            <div class="col-lg-4 col-md-6">
-                <article class="card entry-card">
-                    {% if post.image %}
-                    <a href="/blog/{{ post.slug }}">
-                        <img src="{{ post.image }}" class="card-img-top" alt="{{ post.title }}">
-                    </a>
-                    {% endif %}
-                    <div class="card-body p-4">
-                        <div class="mb-2">
-                            <a href="#" class="category-badge">{{ post.category }}</a>
-                        </div>
-                        <h2 class="entry-title">
-                            <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
-                        </h2>
-                        <div class="meta-text">
-                            By <strong>vidyasubodh</strong> | {{ post.date }}
-                        </div>
-                        <p class="entry-summary">
-                            {{ post.content[:140]|striptags }}...
-                        </p>
-                        <a href="/blog/{{ post.slug }}" class="read-more">
-                            Read More <i class="fas fa-arrow-right ms-2"></i>
-                        </a>
-                    </div>
-                </article>
-            </div>
-            {% endfor %}
-            
-            {% if not posts %}
-            <div class="col-12 text-center py-5">
-                <p class="lead text-muted">More clarity coming soon. Stay tuned!</p>
-            </div>
-            {% endif %}
-        </div>
-    </div>
 
     <footer class="footer">
         <div class="container text-center">
