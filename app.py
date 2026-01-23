@@ -78,11 +78,46 @@ def upload_github_image(filename, file_data):
         return f"/uploads/{filename}"
     return None
 
-# --- ROUTES ---
+# --- UPDATED INDEX ROUTE WITH PAGINATION ---
 @app.route('/')
 def index():
+    # Get current page from URL (default is 1)
+    page = request.args.get('page', 1, type=int)
+    per_page = 12
+    
     posts, _ = get_github_file(POSTS_FILE_PATH)
-    return render_template('index.html', posts=posts)
+    
+    # Calculate pagination
+    total_posts = len(posts)
+    total_pages = (total_posts + per_page - 1) // per_page
+    
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_posts = posts[start:end]
+    
+    return render_template('index.html', 
+                           posts=paginated_posts, 
+                           page=page, 
+                           total_pages=total_pages)
+
+# --- NEW SEARCH ROUTE ---
+@app.route('/search')
+def search():
+    query = request.args.get('q', '').strip().lower()
+    posts, _ = get_github_file(POSTS_FILE_PATH)
+    
+    if query:
+        # Filter posts by title or category matching the query
+        filtered_posts = [
+            p for p in posts 
+            if query in p['title'].lower() or query in p['category'].lower()
+        ]
+    else:
+        filtered_posts = []
+        
+    return render_template('index.html', 
+                           posts=filtered_posts, 
+                           search_query=query)
 
 @app.route('/blog/<slug>')
 def blog_post(slug):
