@@ -15,7 +15,6 @@
         #toc-list { list-style: none; padding-left: 0; }
         #toc-list li { margin-bottom: 5px; }
         #toc-list .toc-h3 { padding-left: 20px; font-size: 0.95rem; }
-        .ad-placeholder { background: #f0f0f0; border: 1px dashed #ccc; text-align: center; padding: 20px; margin: 30px 0; color: #888; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
         .similar-post-card { border: none; transition: 0.3s; }
         .similar-post-card:hover { opacity: 0.8; }
         .post-content h2, .post-content h3 { margin-top: 40px; font-weight: bold; font-family: 'Arial', sans-serif; }
@@ -45,8 +44,6 @@
                 <h1 class="fw-bold display-5 mb-3">{{ post.title }}</h1>
                 <p class="text-muted small">By <strong>vidyarays</strong> | {{ post.date }}</p>
 
-                <div class="ad-placeholder">Advertisement</div>
-
                 <div class="toc-container">
                     <div class="toc-title">Table of Contents</div>
                     <ul id="toc-list"></ul>
@@ -55,8 +52,6 @@
                 <div class="post-content" id="post-body">
                     {{ post.content | safe }}
                 </div>
-
-                <div class="ad-placeholder">Advertisement</div>
 
                 <hr class="my-5">
 
