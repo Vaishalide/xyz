@@ -3,35 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vidiya Subodh | Strategic Educational Resources</title>
-    <meta name="description" content="Vidiya Subodh provides expert guides for JEE, NEET, Defense, and competitive exams.">
+    <title>Vidya Rays - Where Curiosity Meets Clarity</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Roboto', sans-serif; background-color: #f4f7f6; color: #333; }
-        .navbar { background-color: #1a252f; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .blog-card { border: none; border-radius: 12px; transition: transform 0.3s; background: #fff; overflow: hidden; margin-bottom: 30px; }
-        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .featured-img { width: 100%; height: 200px; object-fit: cover; }
-        .footer { background: #1a252f; color: #bdc3c7; padding: 50px 0; margin-top: 60px; }
-        .footer a { color: #fff; text-decoration: none; font-size: 0.9rem; }
-        .footer a:hover { text-decoration: underline; }
+        body { font-family: 'Roboto', sans-serif; background-color: #f7fafc; color: #2d3748; }
+        .navbar { background: #fff; border-bottom: 1px solid #edf2f7; padding: 15px 0; }
+        .navbar-brand { font-weight: 700; color: #1a202c !important; font-size: 24px; }
+        .nav-link { color: #2b6cb0 !important; font-weight: 500; margin-left: 15px; }
+        
+        .entry-card { 
+            background: #fff; 
+            border: none; 
+            border-radius: 0; 
+            box-shadow: 0 15px 15px -10px rgba(0,0,0,0.05); 
+            transition: 0.3s; 
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        .entry-card:hover { transform: translateY(-5px); }
+        .card-img-top { height: 220px; object-fit: cover; border-radius: 0; }
+        
+        .category-badge { 
+            text-transform: uppercase; 
+            font-size: 11px; 
+            letter-spacing: 1px; 
+            color: #2b6cb0; 
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .entry-title { font-size: 20px; font-weight: 700; line-height: 1.4; margin: 10px 0; }
+        .entry-title a { color: #1a202c; text-decoration: none; }
+        .entry-title a:hover { color: #2b6cb0; }
+        
+        .meta-text { font-size: 13px; color: #718096; margin-bottom: 15px; }
+        .entry-summary { font-size: 15px; color: #4a5568; line-height: 1.6; }
+        
+        .read-more { 
+            color: #2b6cb0; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 14px; 
+            display: inline-flex; 
+            align-items: center; 
+        }
+        .footer { background: #fff; border-top: 1px solid #edf2f7; padding: 40px 0; margin-top: 60px; color: #718096; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="/">VIDIYA SUBODH</a>
+            <a class="navbar-brand" href="/">VIDYA RAYS</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/privacy-policy">Privacy Policy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
                 </ul>
             </div>
         </div>
@@ -39,77 +72,46 @@
 
     <div class="container my-5">
         <div class="row">
-            <div class="col-lg-8">
-                <h1 class="fw-bold mb-4">Latest Educational Guides</h1>
-                <div class="row">
-                    {% for post in posts %}
-                    <div class="col-md-6">
-                        <div class="card blog-card h-100">
-                            {% if post.image %}
-                            <img src="{{ post.image }}" class="featured-img" alt="{{ post.title }}">
-                            {% endif %}
-                            <div class="card-body">
-                                <span class="badge bg-info text-dark mb-2">{{ post.category }}</span>
-                                <h4 class="card-title fw-bold">{{ post.title }}</h4>
-                                <p class="text-muted small">{{ post.content[:120]|striptags }}...</p>
-                                <a href="/blog/{{ post.slug }}" class="btn btn-outline-primary btn-sm mt-2">Read Full Article</a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% if not posts %}
-                    <div class="col-12 text-center py-5">
-                        <p class="lead text-muted">New articles are arriving soon. Stay tuned!</p>
-                    </div>
+            {% for post in posts %}
+            <div class="col-lg-4 col-md-6">
+                <article class="card entry-card">
+                    {% if post.image %}
+                    <a href="/blog/{{ post.slug }}">
+                        <img src="{{ post.image }}" class="card-img-top" alt="{{ post.title }}">
+                    </a>
                     {% endif %}
-                </div>
+                    <div class="card-body p-4">
+                        <div class="mb-2">
+                            <a href="#" class="category-badge">{{ post.category }}</a>
+                        </div>
+                        <h2 class="entry-title">
+                            <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
+                        </h2>
+                        <div class="meta-text">
+                            By <strong>vidyarays</strong> | {{ post.date }}
+                        </div>
+                        <p class="entry-summary">
+                            {{ post.content[:140]|striptags }}...
+                        </p>
+                        <a href="/blog/{{ post.slug }}" class="read-more">
+                            Read More <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </article>
             </div>
-
-            <div class="col-lg-4">
-                <div class="card border-0 shadow-sm p-4 mb-4">
-                    <h5 class="fw-bold border-bottom pb-2">Mission</h5>
-                    <p class="small text-muted">Vidiya Subodh is dedicated to democratizing quality education by providing structured, exam-oriented resources for students across India.</p>
-                </div>
-                <div class="card border-0 shadow-sm p-4">
-                    <h5 class="fw-bold border-bottom pb-2">Quick Links</h5>
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="/privacy-policy" class="text-decoration-none text-secondary small">Privacy Policy</a></li>
-                        <li class="mb-2"><a href="/terms" class="text-decoration-none text-secondary small">Terms & Conditions</a></li>
-                        <li class="mb-2"><a href="/disclaimer" class="text-decoration-none text-secondary small">Disclaimer</a></li>
-                    </ul>
-                </div>
+            {% endfor %}
+            
+            {% if not posts %}
+            <div class="col-12 text-center py-5">
+                <p class="lead text-muted">More clarity coming soon. Stay tuned!</p>
             </div>
+            {% endif %}
         </div>
     </div>
 
     <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold text-white mb-3">Vidiya Subodh</h5>
-                    <p class="small">A comprehensive educational platform supporting your journey toward competitive success.</p>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold text-white mb-3">Information</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="/about">About Us</a></li>
-                        <li><a href="/contact">Contact Us</a></li>
-                        <li><a href="/login">Admin Login</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold text-white mb-3">Legal</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="/privacy-policy">Privacy Policy</a></li>
-                        <li><a href="/terms">Terms & Conditions</a></li>
-                        <li><a href="/disclaimer">Disclaimer</a></li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="border-secondary mt-4">
-            <div class="text-center small">
-                &copy; 2026 Vidiya Subodh. All rights reserved.
-            </div>
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026 Vidya Rays. All rights reserved.</p>
         </div>
     </footer>
 
