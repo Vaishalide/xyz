@@ -83,16 +83,45 @@ def upload_github_image(filename, file_data):
 def sitemap():
     """Generates a sitemap.xml dynamically."""
     pages = []
-    # Static pages
+    
+    # 1. Add Static pages
+    # We filter for rules that allow GET and have no arguments (like /login, /about)
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and len(rule.arguments) == 0:
+            # Skip sitemap.xml itself to prevent recursion if you want, though it's allowed
+            if "sitemap" in str(rule.rule):
+                continue
+            
+            # Construct full URL
             pages.append(["https://subodhpgcollege.site" + str(rule.rule), "2026-01-26"])
 
-    # Dynamic Blog Posts from posts.json
-    posts, _ = get_github_file(POSTS_FILE_PATH)
+    # 2. Add Dynamic Blog Posts from posts.json
+    posts = []
+    
+    # First, try fetching from GitHub API
+    github_posts, _ = get_github_file(POSTS_FILE_PATH)
+    if github_posts:
+        posts = github_posts
+    
+    # Fallback: If GitHub failed, try loading the local file
+    if not posts:
+        try:
+            # Use app.root_path to ensure we find the file correctly
+            local_path = os.path.join(app.root_path, POSTS_FILE_PATH)
+            if os.path.exists(local_path):
+                with open(local_path, 'r', encoding='utf-8') as f:
+                    posts = json.load(f)
+                    print("Loaded posts.json from local file.")
+        except Exception as e:
+            print(f"Error loading local posts.json: {e}")
+
+    # Add posts to pages list
     for post in posts:
-        url = "https://subodhpgcollege.site/blog/" + post['slug']
-        pages.append([url, "2026-01-26"])
+        if 'slug' in post:
+            url = "https://subodhpgcollege.site/blog/" + post['slug']
+            # Use post date if available, otherwise default
+            date = post.get('date', "2026-01-26") 
+            pages.append([url, date])
 
     sitemap_xml = render_template('sitemap_template.xml', pages=pages)
     response = make_response(sitemap_xml)
