@@ -78,6 +78,26 @@ def upload_github_image(filename, file_data):
         return f"/uploads/{filename}"
     return None
 
+@app.route('/sitemap.xml', methods=['GET'])
+def sitemap():
+    """Generates a sitemap.xml dynamically."""
+    pages = []
+    # Static pages
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and len(rule.arguments) == 0:
+            pages.append(["https://subodhpgcollege.site" + str(rule.rule), "2026-01-26"])
+
+    # Dynamic Blog Posts from posts.json
+    posts, _ = get_github_file(POSTS_FILE_PATH)
+    for post in posts:
+        url = "https://subodhpgcollege.site/blog/" + post['slug']
+        pages.append([url, "2026-01-26"])
+
+    sitemap_xml = render_template('sitemap_template.xml', pages=pages)
+    response = make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
 # --- UPDATED INDEX ROUTE WITH PAGINATION ---
 @app.route('/')
 def index():
