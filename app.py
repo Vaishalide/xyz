@@ -81,53 +81,70 @@ def upload_github_image(filename, file_data):
 
 @app.route('/sitemap.xml', methods=['GET'])
 def sitemap():
-    """Generates a sitemap.xml dynamically."""
+    """Generates a sitemap.xml dynamically with fixed date formats."""
     pages = []
+    base_url = "https://subodhpgcollege.site"
     
     # 1. Add Static pages
-    # We filter for rules that allow GET and have no arguments (like /login, /about)
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and len(rule.arguments) == 0:
-            # Skip sitemap.xml itself to prevent recursion if you want, though it's allowed
-            if "sitemap" in str(rule.rule):
+            rule_str = str(rule.rule)
+            
+            # Filter out admin, login, and system routes
+            if any(x in rule_str for x in ['/admin', '/login', '/sitemap', '/static', '/uploads', '/search']):
                 continue
             
-            # Construct full URL
-            pages.append(["https://subodhpgcollege.site" + str(rule.rule), "2026-01-26"])
+            # Static pages get today's date or a fixed date
+            pages.append([base_url + rule_str, "2026-01-26"])
 
-    # 2. Add Dynamic Blog Posts from posts.json
+    # 2. Add Dynamic Blog Posts
     posts = []
     
-    # First, try fetching from GitHub API
+    # Attempt 1: Fetch from GitHub API
     github_posts, _ = get_github_file(POSTS_FILE_PATH)
     if github_posts:
         posts = github_posts
     
-    # Fallback: If GitHub failed, try loading the local file
+    # Attempt 2: Fallback to Local File (Fixes "Empty Sitemap")
     if not posts:
         try:
-            # Use app.root_path to ensure we find the file correctly
             local_path = os.path.join(app.root_path, POSTS_FILE_PATH)
             if os.path.exists(local_path):
                 with open(local_path, 'r', encoding='utf-8') as f:
                     posts = json.load(f)
-                    print("Loaded posts.json from local file.")
+                    print("Loaded posts from local file for sitemap.")
         except Exception as e:
             print(f"Error loading local posts.json: {e}")
 
-    # Add posts to pages list
+    # Process posts and FIX DATES
     for post in posts:
         if 'slug' in post:
-            url = "https://subodhpgcollege.site/blog/" + post['slug']
-            # Use post date if available, otherwise default
-            date = post.get('date', "2026-01-26") 
-            pages.append([url, date])
+            url = f"{base_url}/blog/{post['slug']}"
+            
+            # --- DATE FIXING LOGIC ---
+            # Google requires YYYY-MM-DD. Your json has "January 2026".
+            raw_date = post.get('date', "")
+            formatted_date = "2026-01-26" # Default fallback
+            
+            try:
+                # Try to parse "January 2026"
+                dt_obj = datetime.strptime(raw_date, "%B %Y")
+                formatted_date = dt_obj.strftime("%Y-%m-%d") # Converts to 2026-01-01
+            except ValueError:
+                # If parsing fails, check if it's already YYYY-MM-DD
+                try:
+                    datetime.strptime(raw_date, "%Y-%m-%d")
+                    formatted_date = raw_date
+                except ValueError:
+                    # If date is missing or invalid, use the default
+                    formatted_date = "2026-01-26"
+            
+            pages.append([url, formatted_date])
 
     sitemap_xml = render_template('sitemap_template.xml', pages=pages)
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
     return response
-
 # --- UPDATED INDEX ROUTE WITH PAGINATION ---
 @app.route('/')
 def index():
