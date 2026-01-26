@@ -215,5 +215,9 @@ def contact(): return render_template('contact.html')
 @app.route('/about')
 def about(): return render_template('about.html')
 
+@app.route('/robots.txt')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
+
 if __name__ == '__main__':
     app.run(debug=True)
