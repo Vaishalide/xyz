@@ -41,6 +41,46 @@
 
         .similar-post-card { border: none; transition: 0.3s; background: transparent; }
         .similar-post-card:hover { transform: translateY(-3px); }
+        /* Horizontal Scroll Slider */
+    .similar-posts-wrapper {
+        display: flex;
+        overflow-x: auto;
+        gap: 1.5rem;
+        padding-bottom: 15px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+    .similar-posts-wrapper::-webkit-scrollbar {
+        height: 6px;
+    }
+    .similar-posts-wrapper::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 10px;
+    }
+    .similar-card-item {
+        flex: 0 0 75%; /* Shows 1.5 cards on mobile */
+        scroll-snap-align: start;
+    }
+    @media (min-width: 768px) {
+        .similar-card-item { flex: 0 0 30%; } /* Shows ~3 cards on desktop */
+    }
+
+    /* Internal Links Styling */
+    .internal-links-box {
+        background: #f8fafc;
+        border-left: 4px solid #2b6cb0;
+        padding: 20px;
+        margin: 30px 0;
+        border-radius: 0 8px 8px 0;
+    }
+    .internal-links-box a {
+        display: block;
+        color: #2b6cb0;
+        font-weight: 600;
+        margin-bottom: 10px;
+        text-decoration: none;
+    }
+    .internal-links-box a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -83,25 +123,34 @@
                         {{ post.content | safe }}
                     </div>
 
-                    <hr class="my-5">
+                    {% if similar_posts %}
+<div class="internal-links-box">
+    <h5 class="fw-bold mb-3">🔗 Internal Links</h5>
+    {% for s_link in similar_posts[:3] %}
+    <a href="/blog/{{ s_link.slug }}">👉 {{ s_link.title }}</a>
+    {% endfor %}
+</div>
+{% endif %}
 
-                    <h3 class="fw-bold mb-4">Similar Posts</h3>
-                    <div class="row">
-                        {% for s_post in similar_posts %}
-                        <div class="col-md-4 mb-4">
-                            <a href="/blog/{{ s_post.slug }}" class="text-decoration-none text-dark">
-                                <div class="card similar-post-card">
-                                    {% if s_post.image %}
-                                    <img src="{{ s_post.image }}" class="card-img-top rounded" style="height:160px; object-fit:cover;">
-                                    {% endif %}
-                                    <div class="card-body px-0 py-2">
-                                        <h6 class="fw-bold small">{{ s_post.title }}</h6>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        {% endfor %}
-                    </div>
+<hr class="my-5">
+
+<h3 class="fw-bold mb-4">Similar Posts</h3>
+<div class="similar-posts-wrapper">
+    {% for s_post in similar_posts %}
+    <div class="similar-card-item">
+        <a href="/blog/{{ s_post.slug }}" class="text-decoration-none text-dark">
+            <div class="card similar-post-card h-100">
+                {% if s_post.image %}
+                <img src="{{ s_post.image }}" class="card-img-top rounded" style="height:160px; object-fit:cover;">
+                {% endif %}
+                <div class="card-body px-0 py-2">
+                    <h6 class="fw-bold small">{{ s_post.title }}</h6>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
                 </div>
             </div>
         </div>
