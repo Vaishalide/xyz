@@ -195,8 +195,15 @@ def blog_post(slug):
     if not post:
         return "Post not found", 404
     
-    # Logic for Similar Posts: Filter by category, exclude current post, limit to 3
-    similar_posts = [p for p in posts if p['category'] == post['category'] and p['slug'] != slug][:3]
+    # Updated Logic: Clean category names for comparison (lowercase + strip whitespace)
+    # This ensures " Finance" and "finance" are treated as the same category
+    current_category = post.get('category', '').strip().lower()
+    
+    similar_posts = [
+        p for p in posts 
+        if p.get('category', '').strip().lower() == current_category 
+        and p['slug'] != slug
+    ]
     
     return render_template('blog_post.html', post=post, similar_posts=similar_posts)
 
