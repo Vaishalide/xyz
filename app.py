@@ -2,10 +2,12 @@ import os
 import json
 import base64
 import requests
-from flask import Flask, render_template, make_response, request, redirect, url_for, session, flash, jsonify, Response  # Added Response here
+import random # Add this for selecting a random blog post
+from flask import Flask, render_template, make_response, request, redirect, url_for, session, flash, jsonify, Response
 from functools import wraps
 from datetime import datetime
-from bs4 import BeautifulSoup # Added for HTML filtering
+from bs4 import BeautifulSoup
+from itsdangerous import URLSafeSerializer # Add this for encrypting the URL
 
 app = Flask(__name__)
 
@@ -17,6 +19,9 @@ REPO_NAME = os.environ.get("GITHUB_REPO")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
 BRANCH = os.environ.get("GITHUB_BRANCH", "main")
 POSTS_FILE_PATH = "posts.json"
+
+# Initialize the serializer
+url_serializer = URLSafeSerializer(app.secret_key)
 
 def login_required(f):
     @wraps(f)
@@ -145,27 +150,142 @@ def sitemap():
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
     return response
-# --- UPDATED INDEX ROUTE WITH PAGINATION ---
+# --- NEW: URL SHORTENER ROUTES ---
+
+@app.route('/api/geturl')
+def api_geturl():
+    """Generates the encrypted short link."""
+    target_url = request.args.get('url')
+    if not target_url:
+        return jsonify({"error": "No URL provided"}), 400
+    
+    # Encrypt the target URL
+    encrypted_data = url_serializer.dumps(target_url)
+    
+    # Generate the link pointing to propup.php
+    short_link = url_for('propup', data=encrypted_data, _external=True)
+    return jsonify({"short_url": short_link})
+
+@app.route('/propup.php')
+def propup():
+    """Landing page that sets the 30-minute cookie and instructs the user."""
+    encrypted_data = request.args.get('data')
+    if not encrypted_data:
+        return "Invalid link", 400
+    
+    try:
+        # Verify the data is valid
+        target_url = url_serializer.loads(encrypted_data)
+    except Exception:
+        return "Invalid or expired link", 400
+
+    # Render the instructions page
+    resp = make_response(render_template('propup.html'))
+    
+    # Set a cookie valid for 30 minutes (1800 seconds)
+    # Store both the target URL and the current step (Step 1)
+    cookie_state = json.dumps({"target_url": target_url, "step": 1})
+    encoded_cookie = url_serializer.dumps(cookie_state)
+    
+    # Replace old cookie with new one
+    resp.set_cookie('link_session', encoded_cookie, max_age=1800)
+    
+    return resp
+
+@app.route('/next_step')
+def next_step():
+    """Handles the transition from Step 1 (Index) to Step 2 (Blog Post)."""
+    link_session_cookie = request.cookies.get('link_session')
+    if not link_session_cookie:
+        return redirect(url_for('index'))
+        
+    try:
+        cookie_data = json.loads(url_serializer.loads(link_session_cookie))
+        
+        # Upgrade to Step 2
+        cookie_data['step'] = 2
+        
+        # Pick a random blog post for Step 2
+        posts, _ = get_github_file(POSTS_FILE_PATH)
+        if posts:
+            random_post = random.choice(posts)
+            next_url = url_for('blog_post', slug=random_post['slug'])
+        else:
+            next_url = url_for('index')
+
+        resp = make_response(redirect(next_url))
+        encoded_cookie = url_serializer.dumps(cookie_data)
+        resp.set_cookie('link_session', encoded_cookie, max_age=1800)
+        return resp
+    except Exception:
+        return redirect(url_for('index'))
+
+
+# --- UPDATED INDEX ROUTE ---
 @app.route('/')
 def index():
-    # Get current page from URL (default is 1)
     page = request.args.get('page', 1, type=int)
     per_page = 12
-    
     posts, _ = get_github_file(POSTS_FILE_PATH)
     
-    # Calculate pagination
     total_posts = len(posts)
     total_pages = (total_posts + per_page - 1) // per_page
-    
     start = (page - 1) * per_page
     end = start + per_page
     paginated_posts = posts[start:end]
     
+    # Check if the user is currently in the shortener flow
+    shortener_step = 0
+    link_session_cookie = request.cookies.get('link_session')
+    if link_session_cookie:
+        try:
+            cookie_data = json.loads(url_serializer.loads(link_session_cookie))
+            if cookie_data.get('step') == 1:
+                shortener_step = 1
+        except Exception:
+            pass
+            
     return render_template('index.html', 
                            posts=paginated_posts, 
                            page=page, 
-                           total_pages=total_pages)
+                           total_pages=total_pages,
+                           shortener_step=shortener_step) # Pass step to template
+
+# --- UPDATED BLOG POST ROUTE ---
+@app.route('/blog/<slug>')
+def blog_post(slug):
+    posts, _ = get_github_file(POSTS_FILE_PATH)
+    post = next((p for p in posts if p['slug'] == slug), None)
+    
+    if not post:
+        return "Post not found", 404
+    
+    current_category = post.get('category', '').strip().lower()
+    similar_posts = [p for p in posts if p.get('category', '').strip().lower() == current_category and p['slug'] != slug]
+    
+    # Check if user is on Step 2 of the flow
+    shortener_step = 0
+    target_url = ""
+    link_session_cookie = request.cookies.get('link_session')
+    if link_session_cookie:
+        try:
+            cookie_data = json.loads(url_serializer.loads(link_session_cookie))
+            if cookie_data.get('step') == 2:
+                shortener_step = 2
+                target_url = cookie_data.get('target_url')
+                
+                # IMPORTANT: Clear the cookie after they get the link so it doesn't loop
+                # If you want to keep it, remove these lines.
+        except Exception:
+            pass
+
+    # Create response so we can potentially delete the cookie if needed later
+    resp = make_response(render_template('blog_post.html', 
+                                         post=post, 
+                                         similar_posts=similar_posts,
+                                         shortener_step=shortener_step,
+                                         target_url=target_url))
+    return resp
 
 # --- NEW SEARCH ROUTE ---
 @app.route('/search')
@@ -186,26 +306,6 @@ def search():
                            posts=filtered_posts, 
                            search_query=query)
 
-@app.route('/blog/<slug>')
-def blog_post(slug):
-    posts, _ = get_github_file(POSTS_FILE_PATH)
-    # Find the current post
-    post = next((p for p in posts if p['slug'] == slug), None)
-    
-    if not post:
-        return "Post not found", 404
-    
-    # Updated Logic: Clean category names for comparison (lowercase + strip whitespace)
-    # This ensures " Finance" and "finance" are treated as the same category
-    current_category = post.get('category', '').strip().lower()
-    
-    similar_posts = [
-        p for p in posts 
-        if p.get('category', '').strip().lower() == current_category 
-        and p['slug'] != slug
-    ]
-    
-    return render_template('blog_post.html', post=post, similar_posts=similar_posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
