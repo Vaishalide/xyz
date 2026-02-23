@@ -227,12 +227,13 @@ def next_step():
         return redirect(url_for('index'))
         
     try:
+        # 1. Read the current cookie
         cookie_data = json.loads(url_serializer.loads(link_session_cookie))
         
-        # Increment the user's current step
+        # 2. Increment the user's current step
         cookie_data['step'] += 1
         
-        # Pick a random blog post
+        # 3. Pick a random blog post
         posts, _ = get_github_file(POSTS_FILE_PATH)
         if posts:
             random_post = random.choice(posts)
@@ -240,11 +241,17 @@ def next_step():
         else:
             next_url = url_for('index')
 
+        # 4. Update the cookie and redirect
         resp = make_response(redirect(next_url))
-        encoded_cookie = url_serializer.dumps(cookie_data)
+        
+        # ---> THE FIX: Added json.dumps() here so the cookie doesn't break! <---
+        encoded_cookie = url_serializer.dumps(json.dumps(cookie_data)) 
+        
         resp.set_cookie('link_session', encoded_cookie, max_age=1800)
         return resp
-    except Exception:
+        
+    except Exception as e:
+        print(f"Cookie error in next_step: {e}") # Helps you spot errors in the terminal
         return redirect(url_for('index'))
 
 
