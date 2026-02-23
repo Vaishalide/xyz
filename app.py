@@ -150,51 +150,78 @@ def sitemap():
     response = make_response(sitemap_xml)
     response.headers["Content-Type"] = "application/xml"
     return response
-# --- NEW: URL SHORTENER ROUTES ---
+# --- ADD THIS HELPER FUNCTION ANYWHERE ABOVE YOUR ROUTES ---
+def get_shortener_context():
+    """Reads the cookie and returns the current step, total steps, and target URL."""
+    link_session_cookie = request.cookies.get('link_session')
+    if link_session_cookie:
+        try:
+            cookie_data = json.loads(url_serializer.loads(link_session_cookie))
+            return {
+                "is_active": True,
+                "step": cookie_data.get('step', 0),
+                "total_steps": cookie_data.get('total_steps', 2), # Default to 2 if missing
+                "target_url": cookie_data.get('target_url', '')
+            }
+        except Exception:
+            pass
+    return {"is_active": False, "step": 0, "total_steps": 0, "target_url": ""}
+
+
+# --- UPDATED URL SHORTENER ROUTES ---
 
 @app.route('/api/geturl')
 def api_geturl():
-    """Generates the encrypted short link."""
+    """Generates the encrypted short link with a dynamic step count."""
     target_url = request.args.get('url')
+    # Default to 2 steps if you don't provide the ?steps= parameter
+    steps = request.args.get('steps', 2, type=int) 
+    
     if not target_url:
         return jsonify({"error": "No URL provided"}), 400
     
-    # Encrypt the target URL
-    encrypted_data = url_serializer.dumps(target_url)
+    # Encrypt a dictionary with both the URL and the total steps required
+    payload = {"url": target_url, "steps": steps}
+    encrypted_data = url_serializer.dumps(payload)
     
-    # Generate the link pointing to propup.php
     short_link = url_for('propup', data=encrypted_data, _external=True)
-    return jsonify({"short_url": short_link})
+    return jsonify({"short_url": short_link, "total_steps": steps})
 
 @app.route('/propup.php')
 def propup():
-    """Landing page that sets the 30-minute cookie and instructs the user."""
+    """Landing page that sets the cookie with total steps."""
     encrypted_data = request.args.get('data')
     if not encrypted_data:
         return "Invalid link", 400
     
     try:
-        # Verify the data is valid
-        target_url = url_serializer.loads(encrypted_data)
+        payload = url_serializer.loads(encrypted_data)
+        # Support older links that only had the string, and new links with the dictionary
+        if isinstance(payload, str):
+            target_url = payload
+            total_steps = 2
+        else:
+            target_url = payload.get("url")
+            total_steps = payload.get("steps", 2)
     except Exception:
         return "Invalid or expired link", 400
 
-    # Render the instructions page
     resp = make_response(render_template('propup.html'))
     
-    # Set a cookie valid for 30 minutes (1800 seconds)
-    # Store both the target URL and the current step (Step 1)
-    cookie_state = json.dumps({"target_url": target_url, "step": 1})
+    # Store the target URL, starting step (1), and the total required steps
+    cookie_state = json.dumps({
+        "target_url": target_url, 
+        "step": 1, 
+        "total_steps": total_steps
+    })
     encoded_cookie = url_serializer.dumps(cookie_state)
-    
-    # Replace old cookie with new one
     resp.set_cookie('link_session', encoded_cookie, max_age=1800)
     
     return resp
 
 @app.route('/next_step')
 def next_step():
-    """Handles the transition from Step 1 (Index) to Step 2 (Blog Post)."""
+    """Increments the step and sends the user to a random blog post."""
     link_session_cookie = request.cookies.get('link_session')
     if not link_session_cookie:
         return redirect(url_for('index'))
@@ -202,10 +229,10 @@ def next_step():
     try:
         cookie_data = json.loads(url_serializer.loads(link_session_cookie))
         
-        # Upgrade to Step 2
-        cookie_data['step'] = 2
+        # Increment the user's current step
+        cookie_data['step'] += 1
         
-        # Pick a random blog post for Step 2
+        # Pick a random blog post
         posts, _ = get_github_file(POSTS_FILE_PATH)
         if posts:
             random_post = random.choice(posts)
@@ -234,22 +261,16 @@ def index():
     end = start + per_page
     paginated_posts = posts[start:end]
     
-    # Check if the user is currently in the shortener flow
-    shortener_step = 0
-    link_session_cookie = request.cookies.get('link_session')
-    if link_session_cookie:
-        try:
-            cookie_data = json.loads(url_serializer.loads(link_session_cookie))
-            if cookie_data.get('step') == 1:
-                shortener_step = 1
-        except Exception:
-            pass
+    shortener = get_shortener_context()
+    # Only show the timer on the index page if they are exactly on Step 1
+    show_timer = shortener['is_active'] and shortener['step'] == 1
             
     return render_template('index.html', 
                            posts=paginated_posts, 
                            page=page, 
                            total_pages=total_pages,
-                           shortener_step=shortener_step) # Pass step to template
+                           show_timer=show_timer,
+                           shortener=shortener)
 
 # --- UPDATED BLOG POST ROUTE ---
 @app.route('/blog/<slug>')
@@ -263,30 +284,16 @@ def blog_post(slug):
     current_category = post.get('category', '').strip().lower()
     similar_posts = [p for p in posts if p.get('category', '').strip().lower() == current_category and p['slug'] != slug]
     
-    # Check if user is on Step 2 of the flow
-    shortener_step = 0
-    target_url = ""
-    link_session_cookie = request.cookies.get('link_session')
-    if link_session_cookie:
-        try:
-            cookie_data = json.loads(url_serializer.loads(link_session_cookie))
-            if cookie_data.get('step') == 2:
-                shortener_step = 2
-                target_url = cookie_data.get('target_url')
-                
-                # IMPORTANT: Clear the cookie after they get the link so it doesn't loop
-                # If you want to keep it, remove these lines.
-        except Exception:
-            pass
+    shortener = get_shortener_context()
+    # Show the timer on blog posts for Step 2 and beyond
+    show_timer = shortener['is_active'] and shortener['step'] > 1
 
-    # Create response so we can potentially delete the cookie if needed later
     resp = make_response(render_template('blog_post.html', 
                                          post=post, 
                                          similar_posts=similar_posts,
-                                         shortener_step=shortener_step,
-                                         target_url=target_url))
+                                         show_timer=show_timer,
+                                         shortener=shortener))
     return resp
-
 # --- NEW SEARCH ROUTE ---
 @app.route('/search')
 def search():
