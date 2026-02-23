@@ -152,6 +152,52 @@
     {% endif %}
 </div>
 
+    {% if show_timer %}
+<div id="shortener-banner" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #ffeb3b; color: black; text-align: center; padding: 15px; font-weight: bold; z-index: 9999; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+    You are on Step {{ shortener.step }} of {{ shortener.total_steps }}. Please wait <span id="shortener-timer">15</span> seconds...
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let timeLeft = 15; // Set your timer duration here
+        const timerEl = document.getElementById('shortener-timer');
+        const bannerEl = document.getElementById('shortener-banner');
+        
+        // Create the button container (hidden at first)
+        const btnContainer = document.createElement('div');
+        btnContainer.style.textAlign = 'center';
+        btnContainer.style.padding = '40px 20px';
+        btnContainer.style.display = 'none';
+        
+        // Check if the user has reached the final step
+        const currentStep = {{ shortener.step }};
+        const totalSteps = {{ shortener.total_steps }};
+        
+        if (currentStep >= totalSteps) {
+            // Final Step: Show the real target link
+            btnContainer.innerHTML = '<a href="{{ shortener.target_url }}" style="padding: 15px 30px; background-color: #2196F3; color: white; text-decoration: none; font-size: 18px; border-radius: 5px; font-weight: bold;">Get Link</a>';
+        } else {
+            // Not the final step: Show Next button
+            btnContainer.innerHTML = '<a href="/next_step" style="padding: 15px 30px; background-color: #4CAF50; color: white; text-decoration: none; font-size: 18px; border-radius: 5px; font-weight: bold;">Next Step</a>';
+        }
+        
+        document.body.appendChild(btnContainer);
+
+        const countdown = setInterval(function() {
+            timeLeft--;
+            timerEl.innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                bannerEl.innerText = currentStep >= totalSteps 
+                    ? "Please scroll down to the bottom to get your link." 
+                    : "Please scroll down to the bottom and click Next.";
+                btnContainer.style.display = 'block';
+            }
+        }, 1000);
+    });
+</script>
+{% endif %}
+
     <footer class="footer">
         <div class="container text-center">
             <p class="mb-0">&copy; 2026 Vidya Subodh. All rights reserved.</p>
