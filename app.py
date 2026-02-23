@@ -174,24 +174,36 @@ def get_shortener_context():
             return {"is_active": False, "step": 0, "total_steps": 0, "target_url": "", "clear_cookie": True}
     return {"is_active": False, "step": 0, "total_steps": 0, "target_url": "", "clear_cookie": False}
 
-# --- UPDATED URL SHORTENER ROUTES ---
-
-@app.route('/api/geturl')
-def api_geturl():
-    """Generates the encrypted short link with a dynamic step count."""
-    target_url = request.args.get('url')
-    # Default to 2 steps if you don't provide the ?steps= parameter
-    steps = request.args.get('steps', 2, type=int) 
+@app.route('/api', methods=['GET'])
+def api_shorten():
+    """Generates the encrypted short link matching the external API format."""
+    api_key = request.args.get('api')      # Captures the API key from the URL
+    target_url = request.args.get('url')   # The destination URL
+    alias = request.args.get('alias')      # Captured but ignored (uses encryption instead)
+    steps = request.args.get('steps', 2, type=int) # Keeps your existing dynamic step logic
     
     if not target_url:
-        return jsonify({"error": "No URL provided"}), 400
+        return jsonify({
+            "status": "error", 
+            "message": "No URL provided"
+        }), 400
     
-    # Encrypt a dictionary with both the URL and the total steps required
+    # OPTIONAL: Add a check here if you want to restrict who can create links
+    # if api_key != "d9918049795aad4d2d193e317ac522f1d276c701":
+    #     return jsonify({"status": "error", "message": "Invalid API key"}), 403
+    
+    # Encrypt the URL and steps into a secure payload
     payload = {"url": target_url, "steps": steps}
     encrypted_data = url_serializer.dumps(payload)
     
+    # Generate the full link pointing to propup.php
     short_link = url_for('propup', data=encrypted_data, _external=True)
-    return jsonify({"short_url": short_link, "total_steps": steps})
+    
+    # Return the exact JSON structure requested
+    return jsonify({
+        "status": "success",
+        "shortenedUrl": short_link
+    })
 
 
 # 2. UPDATED PROPUP ROUTE (Returns 404 if accessed directly)
