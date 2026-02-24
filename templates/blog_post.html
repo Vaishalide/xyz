@@ -3,98 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }} - Vidya Subodh</title>
+    <title>{{ post.title }} - Vidhya Subodh</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1882984403181150"
-     crossorigin="anonymous"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1882984403181150" crossorigin="anonymous"></script>
+    
     <style>
-        body { font-family: 'Georgia', serif; line-height: 1.8; color: #333; background-color: #f7fafc; }
+        /* Base Styles */
+        body { font-family: 'Poppins', sans-serif; background-color: #F0F5FA; color: #334155; }
         .skip-link { position: absolute; top: -40px; left: 0; background: #000; color: white; padding: 8px; z-index: 100; transition: top 0.3s; }
         .skip-link:focus { top: 0; }
         
-        /* Navbar Styling */
-        .navbar { background: #fff; border-bottom: 1px solid #eee; padding: 15px 0; }
-        .navbar-brand { font-size: 24px; color: #1a202c !important; }
+        /* --- NAVIGATION BAR STYLES --- */
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 15px 0;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 24px;
+            color: #1e293b !important;
+        }
+        .nav-link {
+            color: #334155 !important;
+            font-weight: 500;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: #046bd2 !important; }
+
+        @media (min-width: 992px) {
+            .dropdown:hover .dropdown-menu {
+                display: block;
+                margin-top: 0;
+                border-top: 2px solid #046bd2;
+            }
+        }
+        .dropdown-menu { border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 4px; }
+        .dropdown-item { padding: 10px 20px; font-size: 15px; color: #334155; }
+        .dropdown-item:hover { background-color: #F0F5FA; color: #046bd2; }
         
-        /* Content Area */
-        .main-card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        /* --- CONTENT AREA STYLES --- */
+        .main-card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 6px 15px -2px rgba(16, 24, 40, 0.05); }
         .featured-image-container img { width: 100%; border-radius: 8px; margin-bottom: 30px; object-fit: cover; max-height: 500px; }
         
         /* Table of Contents */
-        .toc-container { background: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin: 20px 0; }
-        .toc-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; color: #2b6cb0; }
+        .toc-container { background: #f9f9f9; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .toc-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; color: #046bd2; }
         #toc-list { list-style: none; padding-left: 0; }
         #toc-list li { margin-bottom: 5px; }
-        #toc-list a { text-decoration: none; color: #2b6cb0; font-weight: 500; }
+        #toc-list a { text-decoration: none; color: #046bd2; font-weight: 500; }
         #toc-list .toc-h3 { padding-left: 20px; font-size: 0.95rem; }
         
         /* Post Content Formatting */
-        .post-content { white-space: pre-wrap; word-wrap: break-word; font-size: 1.1rem; }
+        .post-content { white-space: pre-wrap; word-wrap: break-word; font-size: 1.1rem; font-family: 'Georgia', serif; line-height: 1.8; color: #333; }
         .post-content p { margin-bottom: 1.5rem; white-space: normal; }
-        .post-content h2, .post-content h3 { margin-top: 40px; font-weight: bold; font-family: 'Arial', sans-serif; color: #1a202c; }
+        .post-content h2, .post-content h3 { margin-top: 40px; font-weight: bold; font-family: 'Poppins', sans-serif; color: #1e293b; }
         
         /* Table Support */
-        .post-content table { width: 100%; border-collapse: collapse; margin: 25px 0; font-family: sans-serif; min-width: 400px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); }
-        .post-content table thead tr { background-color: #2b6cb0; color: #ffffff; text-align: left; }
-        .post-content table th, .post-content table td { padding: 12px 15px; border: 1px solid #ddd; }
-        .post-content table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
+        .post-content table { width: 100%; border-collapse: collapse; margin: 25px 0; font-family: 'Poppins', sans-serif; min-width: 400px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.05); }
+        .post-content table thead tr { background-color: #046bd2; color: #ffffff; text-align: left; }
+        .post-content table th, .post-content table td { padding: 12px 15px; border: 1px solid #e2e8f0; font-size: 0.95rem; }
+        .post-content table tbody tr:nth-of-type(even) { background-color: #f8fafc; }
 
-        .similar-post-card { border: none; transition: 0.3s; background: transparent; }
-        .similar-post-card:hover { transform: translateY(-3px); }
-        /* Horizontal Scroll Slider */
-    .similar-posts-wrapper {
-        display: flex;
-        overflow-x: auto;
-        gap: 1.5rem;
-        padding-bottom: 15px;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-    }
-    .similar-posts-wrapper::-webkit-scrollbar {
-        height: 6px;
-    }
-    .similar-posts-wrapper::-webkit-scrollbar-thumb {
-        background: #cbd5e0;
-        border-radius: 10px;
-    }
-    .similar-card-item {
-        flex: 0 0 75%; /* Shows 1.5 cards on mobile */
-        scroll-snap-align: start;
-    }
-    @media (min-width: 768px) {
-        .similar-card-item { flex: 0 0 30%; } /* Shows ~3 cards on desktop */
-    }
+        /* --- SOCIAL MEDIA SHARE BUTTONS --- */
+        .heateor_sss_sharing_container { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+        .heateor_sss_svg {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s, transform 0.2s;
+            cursor: pointer;
+        }
+        .heateor_sss_svg:hover { opacity: 0.9; transform: scale(1.1); }
 
-    /* Internal Links Styling */
-    .internal-links-box {
-        background: #f8fafc;
-        border-left: 4px solid #2b6cb0;
-        padding: 20px;
-        margin: 30px 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .internal-links-box a {
-        display: block;
-        color: #2b6cb0;
-        font-weight: 600;
-        margin-bottom: 10px;
-        text-decoration: none;
-    }
-    .internal-links-box a:hover { text-decoration: underline; }
+        /* Similar Posts / Slider */
+        .similar-post-card { border: none; transition: 0.3s; background: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-radius: 8px;}
+        .similar-post-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .similar-posts-wrapper {
+            display: flex;
+            overflow-x: auto;
+            gap: 1.5rem;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .similar-posts-wrapper::-webkit-scrollbar { height: 6px; }
+        .similar-posts-wrapper::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 10px; }
+        .similar-card-item { flex: 0 0 75%; scroll-snap-align: start; }
+        @media (min-width: 768px) { .similar-card-item { flex: 0 0 30%; } }
+
+        /* Internal Links Styling */
+        .internal-links-box {
+            background: #f8fafc;
+            border-left: 4px solid #046bd2;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .internal-links-box a {
+            display: block;
+            color: #046bd2;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        .internal-links-box a:hover { text-decoration: underline; }
+        
+        footer {
+            background-color: #fff;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+        }
     </style>
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="/">VIDYA SUBODH</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='uploads/your-logo.png') }}" alt="Logo" width="40" height="40" class="me-2 rounded-circle" onerror="this.style.display='none'">
+                <span>Vidhya Subodh</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/privacy-policy">Privacy Policy</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="blogDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Blog
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="blogDropdown">
+                            {% set all_posts = posts | default([]) %}
+                            {% set unique_categories = all_posts | selectattr('category') | map(attribute='category') | unique %}
+                            
+                            {% if unique_categories %}
+                                {% for cat in unique_categories %}
+                                    {% if cat %}
+                                    <li><a class="dropdown-item" href="/search?q={{ cat | urlencode }}" style="text-transform: capitalize;">{{ cat }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <li><a class="dropdown-item" href="/search?q=technology">Technology</a></li>
+                                <li><a class="dropdown-item" href="/search?q=business">Business</a></li>
+                                <li><a class="dropdown-item" href="/search?q=finance">Finance</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="policyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Privacy Policy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="policyDropdown">
+                            <li><a class="dropdown-item" href="/privacy-policy">Privacy Policy</a></li>
+                            <li><a class="dropdown-item" href="/terms">Terms and Conditions</a></li>
+                            <li><a class="dropdown-item" href="/disclaimer">Disclaimer</a></li>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -104,9 +191,9 @@
         <div class="row justify-content-center">
             <div class="col-lg-9">
                 <div class="main-card">
-                    <p class="text-primary fw-bold small mb-1">{{ post.category }} | Blog</p>
-                    <h1 class="fw-bold display-5 mb-3">{{ post.title }}</h1>
-                    <p class="text-muted small mb-4">By <strong>vidyasubodh</strong> | {{ post.date }}</p>
+                    <p class="fw-bold small mb-1" style="color: #046bd2; text-transform: uppercase;">{{ post.category }} | Blog</p>
+                    <h1 class="fw-bold display-5 mb-3" style="font-family: 'Poppins', sans-serif; color: #1e293b;">{{ post.title }}</h1>
+                    <p class="text-muted small mb-4" style="font-family: 'Poppins', sans-serif;">By <strong>Admin</strong> | {{ post.date if post.date else 'Recently Uploaded' }}</p>
 
                     {% if post.image %}
                     <div class="featured-image-container">
@@ -123,84 +210,130 @@
                         {{ post.content | safe }}
                     </div>
 
+                    <div class="heateor_sss_sharing_container mb-5">
+                        <h5 class="fw-bold mb-3" style="font-family: 'Poppins', sans-serif; color: #1e293b;">Share this post:</h5>
+                        <div class="d-flex gap-2">
+                            <a href="https://api.whatsapp.com/send?text={{ post.title | urlencode }} {{ request.url }}" target="_blank" title="WhatsApp">
+                                <span class="heateor_sss_svg" style="background-color:#55eb4c;">
+                                    <svg width="22" height="22" viewBox="-6 -5 40 40" fill="none" stroke="#fff" stroke-width="2">
+                                        <path d="M 11.5 24.4 A 10 10 0 1 0 6.8 20.7"></path>
+                                        <path d="M 7 19 l -1 6 l 6 -1"></path>
+                                    </svg>
+                                </span>
+                            </a>
+                            
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" title="Facebook">
+                                <span class="heateor_sss_svg" style="background-color:#0765FE;">
+                                    <svg width="20" height="20" viewBox="0 0 32 32" fill="#fff">
+                                        <path d="M28 16c0-6.6-5.4-12-12-12S4 9.4 4 16c0 5.6 3.9 10.4 9.1 11.6v-8h-2.5V16h2.5v-1.6c0-4.1 1.8-6 5.9-6 .8 0 2.1.2 2.6.3v3.3h-1.4c-2 0-2.7.7-2.7 2.7V16h3.9l-.7 3.7h-3.2v8.2c5.3-1.3 9.1-6.1 9.1-11.6z"/>
+                                    </svg>
+                                </span>
+                            </a>
+                            
+                            <a href="https://twitter.com/intent/tweet?text={{ post.title | urlencode }}&url={{ request.url }}" target="_blank" title="Twitter">
+                                <span class="heateor_sss_svg" style="background-color:#2a2a2a;">
+                                    <svg width="16" height="16" viewBox="0 0 32 32" fill="#fff">
+                                        <path d="M21.751 7h3.067l-6.7 7.658L26 25.078h-6.172l-4.833-6.32-5.531 6.32h-3.07l7.167-8.19L6 7h6.328l4.37 5.777L21.75 7Zm-1.076 16.242h1.7L11.404 8.74H9.58l11.094 14.503Z"/>
+                                    </svg>
+                                </span>
+                            </a>
+
+                            <a href="https://telegram.me/share/url?url={{ request.url }}&text={{ post.title | urlencode }}" target="_blank" title="Telegram">
+                                <span class="heateor_sss_svg" style="background-color:#3da5f1;">
+                                    <svg width="22" height="22" viewBox="0 0 32 32" fill="#fff">
+                                        <path d="M25.5 6.9L6 14.4c-1.3.5-1.3 1.3-.2 1.6l5 1.6 1.7 5.7c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.4-2.4 5 3.7c.9.5 1.6.3 1.8-.9l3.3-15.6c.3-1.4-.5-2-1.4-1.6z"/>
+                                    </svg>
+                                </span>
+                            </a>
+
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" title="LinkedIn">
+                                <span class="heateor_sss_svg" style="background-color:#0077b5;">
+                                    <svg width="18" height="18" viewBox="0 0 32 32" fill="#fff">
+                                        <path d="M6.2 12.6h4.2v13.5H6.2V12.6zm2.1-6.7c1.3 0 2.4 1.1 2.4 2.4s-1.1 2.4-2.4 2.4-2.4-1.1-2.4-2.4 1.1-2.4 2.4-2.4m4.7 6.7h4v1.8c.6-1.1 1.9-2.2 4-2.2 4.2 0 5 2.8 5 6.4v7.4h-4.2v-6.6c0-1.6 0-3.6-2.2-3.6-2.2 0-2.5 1.7-2.5 3.5v6.7h-4.2V12.6z"/>
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
                     {% if similar_posts %}
-<div class="internal-links-box">
-    <h5 class="fw-bold mb-3">🔗 Internal Links</h5>
-    {% for s_link in similar_posts[:3] %}
-    <a href="/blog/{{ s_link.slug }}">👉 {{ s_link.title }}</a>
-    {% endfor %}
-</div>
-{% endif %}
+                    <div class="internal-links-box">
+                        <h5 class="fw-bold mb-3" style="font-family: 'Poppins', sans-serif;">🔗 Internal Links</h5>
+                        {% for s_link in similar_posts[:3] %}
+                        <a href="/blog/{{ s_link.slug }}">👉 {{ s_link.title }}</a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
 
-<hr class="my-5">
+                    <hr class="my-5">
 
-<h3 class="fw-bold mb-4">Similar Posts</h3>
-<div class="similar-posts-wrapper">
-    {% for s_post in similar_posts %}
-    <div class="similar-card-item">
-        <a href="/blog/{{ s_post.slug }}" class="text-decoration-none text-dark">
-            <div class="card similar-post-card h-100">
-                {% if s_post.image %}
-                <img src="{{ s_post.image }}" class="card-img-top rounded" style="height:160px; object-fit:cover;">
-                {% endif %}
-                <div class="card-body px-0 py-2">
-                    <h6 class="fw-bold small">{{ s_post.title }}</h6>
-                </div>
-            </div>
-        </a>
-    </div>
-    {% endfor %}
-</div>
+                    <h3 class="fw-bold mb-4" style="font-family: 'Poppins', sans-serif; color: #1e293b;">Similar Posts</h3>
+                    <div class="similar-posts-wrapper">
+                        {% for s_post in similar_posts %}
+                        <div class="similar-card-item">
+                            <a href="/blog/{{ s_post.slug }}" class="text-decoration-none text-dark">
+                                <div class="card similar-post-card h-100">
+                                    {% if s_post.image %}
+                                    <img src="{{ s_post.image }}" class="card-img-top rounded-top" style="height:160px; object-fit:cover;">
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h6 class="fw-bold small" style="font-family: 'Poppins', sans-serif;">{{ s_post.title }}</h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     {% if show_timer %}
-<div id="shortener-banner" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #ffeb3b; color: black; text-align: center; padding: 15px; font-weight: bold; z-index: 9999; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-    You are on Step {{ shortener.step }} of {{ shortener.total_steps }}. Please wait <span id="shortener-timer">15</span> seconds...
-</div>
+    <div id="shortener-banner" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #ffeb3b; color: black; text-align: center; padding: 15px; font-weight: bold; z-index: 9999; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+        You are on Step {{ shortener.step }} of {{ shortener.total_steps }}. Please wait <span id="shortener-timer">15</span> seconds...
+    </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let timeLeft = 15; // Set your timer duration here
-        const timerEl = document.getElementById('shortener-timer');
-        const bannerEl = document.getElementById('shortener-banner');
-        
-        // Create the button container (hidden at first)
-        const btnContainer = document.createElement('div');
-        btnContainer.style.textAlign = 'center';
-        btnContainer.style.padding = '40px 20px';
-        btnContainer.style.display = 'none';
-        
-        // Check if the user has reached the final step
-        const currentStep = {{ shortener.step }};
-        const totalSteps = {{ shortener.total_steps }};
-        
-        if (currentStep >= totalSteps) {
-            // Final Step: Show the real target link
-            btnContainer.innerHTML = '<a href="{{ shortener.target_url }}" style="padding: 15px 30px; background-color: #2196F3; color: white; text-decoration: none; font-size: 18px; border-radius: 5px; font-weight: bold;">Get Link</a>';
-        } else {
-            // Not the final step: Show Next button
-            btnContainer.innerHTML = '<a href="/next_step" style="padding: 15px 30px; background-color: #4CAF50; color: white; text-decoration: none; font-size: 18px; border-radius: 5px; font-weight: bold;">Next Step</a>';
-        }
-        
-        document.body.appendChild(btnContainer);
-
-        const countdown = setInterval(function() {
-            timeLeft--;
-            timerEl.innerText = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                bannerEl.innerText = currentStep >= totalSteps 
-                    ? "Please scroll down to the bottom to get your link." 
-                    : "Please scroll down to the bottom and click Next.";
-                btnContainer.style.display = 'block';
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let timeLeft = 15; // Set your timer duration here
+            const timerEl = document.getElementById('shortener-timer');
+            const bannerEl = document.getElementById('shortener-banner');
+            
+            // Create the button container (hidden at first)
+            const btnContainer = document.createElement('div');
+            btnContainer.style.textAlign = 'center';
+            btnContainer.style.padding = '40px 20px';
+            btnContainer.style.display = 'none';
+            
+            // Check if the user has reached the final step
+            const currentStep = {{ shortener.step }};
+            const totalSteps = {{ shortener.total_steps }};
+            
+            if (currentStep >= totalSteps) {
+                // Final Step: Show the real target link
+                btnContainer.innerHTML = '<a href="{{ shortener.target_url }}" style="padding: 15px 30px; background-color: #2196F3; color: white; text-decoration: none; font-size: 18px; border-radius: 5px; font-weight: bold; font-family: \'Poppins\', sans-serif;">Get Link</a>';
+            } else {
+                // Not the final step: Show Next button
+                btnContainer.innerHTML = '<a href="/next_step" style="padding: 15px 30px; background-color: #4CAF50; color: white; text-decoration: none; font-size: 18px; border-radius: 5px; font-weight: bold; font-family: \'Poppins\', sans-serif;">Next Step</a>';
             }
-        }, 1000);
-    });
-</script>
-{% endif %}
+            
+            document.body.appendChild(btnContainer);
+
+            const countdown = setInterval(function() {
+                timeLeft--;
+                timerEl.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    bannerEl.innerText = currentStep >= totalSteps 
+                        ? "Please scroll down to the bottom to get your link." 
+                        : "Please scroll down to the bottom and click Next.";
+                    btnContainer.style.display = 'block';
+                }
+            }, 1000);
+        });
+    </script>
+    {% endif %}
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -231,5 +364,12 @@
         });
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0" style="font-family: 'Poppins', sans-serif;">&copy; 2026 Vidhya Subodh. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
