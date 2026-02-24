@@ -3,204 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-adsense-account" content="ca-pub-1882984403181150">
     <title>Vidya Subodh - Where Curiosity Meets Clarity</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1882984403181150"
-     crossorigin="anonymous"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: 'Roboto', sans-serif; background-color: #f7fafc; color: #2d3748; }
-        .navbar { background: #fff; border-bottom: 1px solid #edf2f7; padding: 15px 0; }
-        .navbar-brand { font-weight: 700; color: #1a202c !important; font-size: 24px; }
-        .nav-link { color: #2b6cb0 !important; font-weight: 500; margin-left: 15px; }
-        
-        .entry-card { 
-            background: #fff; 
-            border: none; 
-            border-radius: 8px; 
-            box-shadow: 0 15px 15px -10px rgba(0,0,0,0.05); 
-            transition: 0.3s; 
-            margin-bottom: 30px;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F0F5FA;
+            color: #334155;
+        }
+
+        /* --- NAVIGATION BAR STYLES --- */
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 24px;
+            color: #1e293b;
+        }
+
+        .nav-link {
+            color: #334155 !important;
+            font-weight: 500;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #046bd2 !important;
+        }
+
+        /* Hover Dropdown CSS */
+        @media (min-width: 992px) {
+            .dropdown:hover .dropdown-menu {
+                display: block;
+                margin-top: 0;
+                border-top: 2px solid #046bd2;
+            }
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            font-size: 15px;
+            color: #334155;
+        }
+
+        .dropdown-item:hover {
+            background-color: #F0F5FA;
+            color: #046bd2;
+        }
+
+        /* --- POST GRID LAYOUT STYLES --- */
+        .ast-blog-layout-4-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px auto;
+            max-width: 1240px;
+            padding: 0 20px;
+        }
+
+        .ast-article-inner {
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0px 6px 15px -2px rgba(16, 24, 40, 0.05);
+            padding: 1.5em;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ast-article-inner:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 15px 30px -5px rgba(16, 24, 40, 0.1);
+        }
+
+        /* Featured Image Area */
+        .ast-blog-featured-section {
+            margin: -1.5em -1.5em 1.2em -1.5em;
             overflow: hidden;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            position: relative;
         }
-        .entry-card:hover { transform: translateY(-5px); }
-        .card-img-top { height: 220px; object-fit: cover; border-radius: 0; }
-        
-        .category-badge { 
-            text-transform: uppercase; 
-            font-size: 11px; 
-            letter-spacing: 1px; 
-            color: #2b6cb0; 
+
+        .ast-blog-featured-section img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .ast-article-inner:hover .ast-blog-featured-section img {
+            transform: scale(1.1);
+        }
+
+        /* Category Label */
+        .cat-links {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .cat-links a {
+            background: #e5f4ff;
+            color: #046bd2;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
             text-decoration: none;
-            font-weight: bold;
+            transition: background 0.2s;
         }
-        .entry-title { font-size: 20px; font-weight: 700; line-height: 1.4; margin: 10px 0; }
-        .entry-title a { color: #1a202c; text-decoration: none; }
-        .entry-title a:hover { color: #2b6cb0; }
-        
-        .meta-text { font-size: 13px; color: #718096; margin-bottom: 15px; }
-        .entry-summary { font-size: 15px; color: #4a5568; line-height: 1.6; }
-        
-        .read-more { 
-            color: #2b6cb0; 
-            text-decoration: none; 
-            font-weight: bold; 
-            font-size: 14px; 
-            display: inline-flex; 
-            align-items: center; 
+
+        .cat-links a:hover {
+            background: #046bd2;
+            color: #fff;
         }
-        .footer { background: #fff; border-top: 1px solid #edf2f7; padding: 40px 0; margin-top: 60px; color: #718096; }
+
+        /* Post Title */
+        .entry-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .entry-title a {
+            color: #1e293b;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .entry-title a:hover {
+            color: #046bd2;
+        }
+
+        /* Meta Data (Date/Author) */
+        .entry-meta {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        /* Excerpt */
+        .ast-excerpt-container {
+            color: #475569;
+            font-size: 15px;
+            line-height: 1.6;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ast-excerpt-container p {
+            margin-bottom: 20px;
+        }
+
+        /* Social Share Icons */
+        .heateor_sss_sharing_container {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .heateor_sss_svg {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        .heateor_sss_svg:hover {
+            opacity: 0.9;
+            transform: scale(1.1);
+        }
+        
+        footer {
+            background-color: #fff;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+        }
     </style>
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg sticky-top">
-    <div class="container">
-        <a class="navbar-brand" href="/">VIDYA SUBODH</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <form class="d-flex ms-auto me-3" action="/search" method="GET">
-                <input class="form-control form-control-sm me-2" type="search" name="q" placeholder="Search posts..." aria-label="Search" value="{{ search_query if search_query else '' }}">
-                <button class="btn btn-outline-primary btn-sm" type="submit"><i class="fas fa-search"></i></button>
-            </form>
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='uploads/your-logo.png') }}" alt="Logo" width="40" height="40" class="me-2 rounded-circle" onerror="this.style.display='none'">
+                <span>Vidhya Subodh</span>
+            </a>
             
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/privacy-policy">Privacy Policy</a></li>
-                <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
-            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="blogDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Blog
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="blogDropdown">
+                            {% set unique_categories = posts | selectattr('category') | map(attribute='category') | unique %}
+                            {% for cat in unique_categories %}
+                                {% if cat %}
+                                <li><a class="dropdown-item" href="/search?q={{ cat | urlencode }}" style="text-transform: capitalize;">{{ cat }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="policyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Privacy Policy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="policyDropdown">
+                            <li><a class="dropdown-item" href="/privacy-policy">Privacy Policy</a></li>
+                            <li><a class="dropdown-item" href="/terms">Terms and Conditions</a></li>
+                            <li><a class="dropdown-item" href="/disclaimer">Disclaimer</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<div class="container my-5">
-    {% if search_query %}
-    <div class="col-12 mb-4">
-        <h3>Search results for: "{{ search_query }}"</h3>
-        <p class="text-muted">{{ posts|length }} posts found.</p>
-    </div>
-    {% endif %}
-
-    <div class="row">
-        {% for post in posts %}
-        <div class="col-lg-4 col-md-6">
-            <article class="card entry-card">
-                {% if post.image %}
-                <a href="/blog/{{ post.slug }}">
-                    <img src="{{ post.image }}" class="card-img-top" alt="{{ post.title }}">
-                </a>
-                {% endif %}
-                <div class="card-body p-4">
-                    <div class="mb-2">
-                        <a href="#" class="category-badge">{{ post.category }}</a>
+    <div class="container">
+        <div class="ast-blog-layout-4-grid">
+            {% for post in posts %}
+            <article class="ast-article-post">
+                <div class="ast-article-inner">
+                    
+                    <div class="ast-blog-featured-section">
+                        <a href="/blog/{{ post.slug }}">
+                            <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+                        </a>
                     </div>
+                    
+                    <span class="cat-links">
+                        <a href="/search?q={{ post.category | urlencode }}">{{ post.category }}</a>
+                    </span>
+                    
                     <h2 class="entry-title">
                         <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
                     </h2>
-                    <div class="meta-text">
-                        By <strong>vidyasubodh</strong> | {{ post.date }}
+                    
+                    <div class="entry-meta">
+                        <span>Admin</span> / 
+                        <span>{{ post.date if post.date else 'February 24, 2026' }}</span>
                     </div>
-                    <p class="entry-summary">
-                        {{ post.content[:140]|striptags }}...
-                    </p>
-                    <a href="/blog/{{ post.slug }}" class="read-more">
-                        Read More <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
+
+                    <div class="ast-excerpt-container">
+                        <p>{{ post.content | striptags | truncate(110) }}</p>
+                        
+                        <div class="heateor_sss_sharing_container">
+                            <div class="d-flex gap-2">
+                                <a href="https://api.whatsapp.com/send?text={{ post.title | urlencode }} {{ request.url_root }}blog/{{ post.slug }}" target="_blank" title="WhatsApp">
+                                    <span class="heateor_sss_svg" style="background-color:#55eb4c;">
+                                        <svg width="18" height="18" viewBox="-6 -5 40 40" fill="none" stroke="#fff" stroke-width="2">
+                                            <path d="M 11.5 24.4 A 10 10 0 1 0 6.8 20.7"></path>
+                                            <path d="M 7 19 l -1 6 l 6 -1"></path>
+                                        </svg>
+                                    </span>
+                                </a>
+                                
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url_root }}blog/{{ post.slug }}" target="_blank" title="Facebook">
+                                    <span class="heateor_sss_svg" style="background-color:#0765FE;">
+                                        <svg width="18" height="18" viewBox="0 0 32 32" fill="#fff">
+                                            <path d="M28 16c0-6.6-5.4-12-12-12S4 9.4 4 16c0 5.6 3.9 10.4 9.1 11.6v-8h-2.5V16h2.5v-1.6c0-4.1 1.8-6 5.9-6 .8 0 2.1.2 2.6.3v3.3h-1.4c-2 0-2.7.7-2.7 2.7V16h3.9l-.7 3.7h-3.2v8.2c5.3-1.3 9.1-6.1 9.1-11.6z"/>
+                                        </svg>
+                                    </span>
+                                </a>
+                                
+                                <a href="https://twitter.com/intent/tweet?text={{ post.title | urlencode }}&url={{ request.url_root }}blog/{{ post.slug }}" target="_blank" title="Twitter">
+                                    <span class="heateor_sss_svg" style="background-color:#2a2a2a;">
+                                        <svg width="14" height="14" viewBox="0 0 32 32" fill="#fff">
+                                            <path d="M21.751 7h3.067l-6.7 7.658L26 25.078h-6.172l-4.833-6.32-5.531 6.32h-3.07l7.167-8.19L6 7h6.328l4.37 5.777L21.75 7Zm-1.076 16.242h1.7L11.404 8.74H9.58l11.094 14.503Z"/>
+                                        </svg>
+                                    </span>
+                                </a>
+
+                                <a href="https://telegram.me/share/url?url={{ request.url_root }}blog/{{ post.slug }}&text={{ post.title | urlencode }}" target="_blank" title="Telegram">
+                                    <span class="heateor_sss_svg" style="background-color:#3da5f1;">
+                                        <svg width="18" height="18" viewBox="0 0 32 32" fill="#fff">
+                                            <path d="M25.5 6.9L6 14.4c-1.3.5-1.3 1.3-.2 1.6l5 1.6 1.7 5.7c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.4-2.4 5 3.7c.9.5 1.6.3 1.8-.9l3.3-15.6c.3-1.4-.5-2-1.4-1.6z"/>
+                                        </svg>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </article>
+            {% endfor %}
         </div>
-        {% endfor %}
-        
-        {% if not posts %}
-        <div class="col-12 text-center py-5">
-            <p class="lead text-muted">More clarity coming soon. Stay tuned!</p>
-            {% if search_query %}
-            <a href="/" class="btn btn-primary">Back to Home</a>
-            {% endif %}
-        </div>
-        {% endif %}
     </div>
 
-    {% if not search_query and total_pages > 1 %}
-    <nav aria-label="Page navigation" class="mt-5">
-        <ul class="pagination justify-content-center">
-            {% if page > 1 %}
-            <li class="page-item">
-                <a class="page-link" href="/?page={{ page - 1 }}">Previous</a>
-            </li>
-            {% endif %}
-
-            {% for p in range(1, total_pages + 1) %}
-            <li class="page-item {{ 'active' if p == page else '' }}">
-                <a class="page-link" href="/?page={{ p }}">{{ p }}</a>
-            </li>
-            {% endfor %}
-
-            {% if page < total_pages %}
-            <li class="page-item">
-                <a class="page-link" href="/?page={{ page + 1 }}">Next</a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
-</div>
-
-    {% if show_timer %}
-<div id="shortener-banner" style="position: fixed; top: 0; left: 0; width: 100%; background-color: #ffeb3b; color: black; text-align: center; padding: 15px; font-weight: bold; z-index: 9999; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-    You are on Step {{ shortener.step }} of {{ shortener.total_steps }}. Please wait <span id="shortener-timer">15</span> seconds...
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let timeLeft = 15; // Set your timer duration here
-        const timerEl = document.getElementById('shortener-timer');
-        const bannerEl = document.getElementById('shortener-banner');
-        
-        // Create the button container (hidden at first)
-        const btnContainer = document.createElement('div');
-        btnContainer.style.textAlign = 'center';
-        btnContainer.style.padding = '40px 20px';
-        btnContainer.style.display = 'none';
-        
-        // Check if the user has reached the final step
-        const currentStep = {{ shortener.step }};
-        const totalSteps = {{ shortener.total_steps }};
-        
-        if (currentStep >= totalSteps) {
-            // Final Step: Show the real target link
-            btnContainer.innerHTML = '<a href="{{ shortener.target_url }}" style="padding: 15px 30px; background-color: #2196F3; color: white; text-decoration: none; font-size: 18px; border-radius: 5px; font-weight: bold;">Get Link</a>';
-        } else {
-            // Not the final step: Show Next button
-            btnContainer.innerHTML = '<a href="/next_step" style="padding: 15px 30px; background-color: #4CAF50; color: white; text-decoration: none; font-size: 18px; border-radius: 5px; font-weight: bold;">Next Step</a>';
-        }
-        
-        document.body.appendChild(btnContainer);
-
-        const countdown = setInterval(function() {
-            timeLeft--;
-            timerEl.innerText = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                bannerEl.innerText = currentStep >= totalSteps 
-                    ? "Please scroll down to the bottom to get your link." 
-                    : "Please scroll down to the bottom and click Next.";
-                btnContainer.style.display = 'block';
-            }
-        }, 1000);
-    });
-</script>
-{% endif %}
-
-    <footer class="footer">
-        <div class="container text-center">
-            <p class="mb-0">&copy; 2026 Vidya Subodh. All rights reserved.</p>
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 Vidhya Subodh. All rights reserved.</p>
         </div>
     </footer>
 
