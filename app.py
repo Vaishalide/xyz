@@ -67,30 +67,12 @@ def update_github_file(path, data, sha, message):
 @app.route('/uploads/<filename>')
 def serve_image(filename):
     """Fetches the image from GitHub and serves it through your domain."""
-    
-    # 1. Catch missing environment variables
-    if not all([REPO_OWNER, REPO_NAME]):
-        print("Error: REPO_OWNER or REPO_NAME environment variables are missing.")
-        return "Server Configuration Error", 500
-
     github_raw_url = f"https://raw.githubusercontent.com/{REPO_OWNER}/{REPO_NAME}/{BRANCH}/static/uploads/{filename}"
-    
-    # 2. Add the GitHub token to authenticate (Required if repo is private)
-    headers = {}
-    if GITHUB_TOKEN:
-        headers["Authorization"] = f"token {GITHUB_TOKEN}"
-
-    # 3. Request the image
-    res = requests.get(github_raw_url, headers=headers)
-    
+    res = requests.get(github_raw_url)
     if res.status_code == 200:
         return Response(res.content, mimetype=res.headers.get('Content-Type'))
-    
-    # 4. Print the exact URL and status to Heroku logs so you can debug if it fails again
-    print(f"Failed to fetch image: {github_raw_url} | GitHub responded with status: {res.status_code}")
-    
     return "Image not found", 404
-
+    
 # --- UPDATED GITHUB IMAGE UPLOAD ---
 def upload_github_image(filename, file_data):
     path = f"static/uploads/{filename}"
