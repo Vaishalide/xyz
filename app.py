@@ -312,7 +312,7 @@ def next_step():
 @app.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
-    per_page = 12
+    per_page = 25
     posts, _ = get_github_file(POSTS_FILE_PATH)
     
     total_posts = len(posts)
