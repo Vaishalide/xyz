@@ -187,10 +187,36 @@ def api_shorten():
     alias = request.args.get('alias')
     steps = request.args.get('steps', 2, type=int)
     
+    # NEW: Check if multiple shortener is enabled
+    multiple_shortener = request.args.get('multiple', 'false').lower() == 'true'
+    
     if not target_url:
         return jsonify({"status": "error", "message": "No URL provided"}), 400
     
-    # 1. Create the payload dictionary
+    # --- GPLINKS INTEGRATION ---
+    if multiple_shortener:
+        try:
+            # Prepare parameters for GPLinks API
+            gplinks_params = {
+                'api': 'be1be8f8f3c02db2e943cc7199c5641971d86283',
+                'url': target_url
+            }
+            if alias:
+                gplinks_params['alias'] = alias
+                
+            # Call GPLinks API
+            gplinks_response = requests.get("https://api.gplinks.com/api", params=gplinks_params)
+            gplinks_data = gplinks_response.json()
+            
+            # If successful, replace the target URL with the GPLinks shortened URL
+            if gplinks_data.get("status") == "success":
+                target_url = gplinks_data.get("shortenedUrl")
+        except Exception as e:
+            print(f"Error calling GPLinks API: {e}")
+            # If the API fails, it will just silently fallback to using the original target_url
+    # ---------------------------
+    
+    # 1. Create the payload dictionary (URL is either the original or GPLinks output)
     payload = {"url": target_url, "steps": steps}
     
     # 2. Convert to JSON bytes, then Encrypt (Fernet automatically adds a timestamp)
